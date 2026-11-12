@@ -1,4 +1,4 @@
-# Slop-bucket Tap
+# slop-bucket Tap
 
 ## How do I install these formulae?
 
