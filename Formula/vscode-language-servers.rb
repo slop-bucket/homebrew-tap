@@ -1,8 +1,8 @@
 class VscodeLanguageServers < Formula
   desc "CSS/LESS/SCSS, HTML, and JSON language servers from VS Code"
   homepage "https://github.com/microsoft/vscode"
-  url "https://github.com/microsoft/vscode/archive/refs/tags/1.136.0.tar.gz"
-  sha256 "17eac9b221cdbda56619de95908be073288cdd9c5c17557491442683e366d557"
+  url "https://github.com/microsoft/vscode/archive/refs/tags/1.146.0.tar.gz"
+  sha256 "7a2fadb7ba458eaac03da1be1d70aa70903fa9377f7f3a367facef3e237c1bb0"
   license "MIT"
 
   livecheck do
