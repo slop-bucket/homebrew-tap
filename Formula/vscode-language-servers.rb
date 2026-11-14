@@ -10,24 +10,48 @@ class VscodeLanguageServers < Formula
     strategy :github_latest
   end
 
+  depends_on "pnpm" => :build
+  depends_on "typescript" => :build
   depends_on "node"
-  depends_on "typescript"
 
-  SERVERS = %w[css html json].freeze
+  SERVERS = %w[css json html].freeze
 
   def install
+    inreplace "extensions/json-language-features/server/tsconfig.json" do |s|
+      s.gsub!(/^\s*"sourceMap": true,\n/, "")
+      s.gsub!(%r{^\s*"sourceRoot": "\.\./src",\n}, "")
+    end
+    inreplace "extensions/json-language-features/server/src/node/jsonServerMain.ts",
+              "fs.readFile(uri.fsPath, encoding)",
+              "fs.readFile(uri.fsPath, encoding ?? null)"
+    inreplace "extensions/html-language-features/server/src/modes/javascriptLibs.ts",
+              "../../node_modules/typescript/lib",
+              "node_modules/typescript/lib"
+
+    pnpm_args = %W[
+      --ignore-workspace
+      --node-linker=hoisted
+      --store-dir=#{buildpath}/.pnpm-store
+    ]
+
     SERVERS.each do |lang|
       cd "extensions/#{lang}-language-features/server" do
-        system "npm", "ci"
+        system "pnpm", "install", *pnpm_args
+        if lang == "html"
+          # HTML language server requires TypeScript 6's createLanguageService API at runtime.
+          system "pnpm", "add", *pnpm_args, "typescript@npm:@typescript/typescript6"
+        end
         system "tsc"
         rm_r("node_modules/@types") if (Pathname.pwd/"node_modules/@types").exist?
-        (libexec/lang).install "node_modules", "out", "package.json"
+        items = %w[node_modules out package.json]
+        items << "lib" if (Pathname.pwd/"lib").exist?
+        (libexec/lang).install items
       end
 
       bin_name = "vscode-#{lang}-language-server"
       (bin/bin_name).write <<~SH
         #!/bin/sh
-        exec "#{formula_opt_bin("node")}/node" "#{libexec}/#{lang}/out/node/#{lang}ServerMain.js" "$@"
+        exec "#{formula_opt_bin("node")}/node" "#{libexec}/#{lang}/out/node/#{lang}ServerNodeMain.js" "$@"
       SH
       chmod 0755, bin/bin_name
     end
@@ -56,6 +80,9 @@ class VscodeLanguageServers < Formula
         stdin.flush
         header = stdout.gets("\r\n\r\n")
         assert_match(/Content-Length: \d+/, header)
+        length = header[/Content-Length: (\d+)/, 1].to_i
+        body = stdout.read(length)
+        assert_match(/"capabilities":/, body)
         Process.kill("TERM", wait_thr.pid)
       end
     end
