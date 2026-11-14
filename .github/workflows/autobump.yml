@@ -31,6 +31,8 @@ jobs:
       - name: Set up git
         id: git_setup
         uses: Homebrew/actions/git-user-config@63a2d4d8d4193eab3e62b1b782ff3ab8408f5b29 # 2026.11.09.1
+        with:
+          username: ${{ case(github.event_name == 'workflow_dispatch', github.actor, 'github-actions[bot]') }}
 
       - name: Bump formulae
         env:
