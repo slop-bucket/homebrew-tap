@@ -10,6 +10,12 @@ class VscodeLanguageServers < Formula
     strategy :github_latest
   end
 
+  bottle do
+    root_url "https://github.com/slop-bucket/homebrew-tap/releases/download/vscode-language-servers-1.146.0"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:  "0f6fa63556be1d33a79708cbb21e6b220f33235c50dde849bb6e3538526bd478"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "b1ebeb8c7cc9c5597d19f5010fbc7451867f265a6d9e719d33aac07f85a526d5"
+  end
+
   depends_on "pnpm" => :build
   depends_on "typescript" => :build
   depends_on "node"
