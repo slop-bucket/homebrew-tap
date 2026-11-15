@@ -5,6 +5,12 @@ class RuamelYaml < Formula
   sha256 "53eb66cd27849eff968ebf8f0bf61f46cdac2da1d1f3576dd4ccee9b25c31993"
   license "MIT"
 
+  bottle do
+    root_url "https://github.com/slop-bucket/homebrew-tap/releases/download/ruamel-yaml-0.19.1"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:  "5808203c57089abdfaaeae58cd83d22b5f7413bd0cd3335c69fc27ab7830deec"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "b06b40e4a59f4dc4889e57a33603f06b02217a5a3331f2215e5ffedaf146b80e"
+  end
+
   depends_on "python-setuptools" => :build
   depends_on "python@3.14" => [:build, :test]
   depends_on "python@3.15" => [:build, :test]
