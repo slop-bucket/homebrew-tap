@@ -1,4 +1,3 @@
-# brew tap-new uses this file to generate a PR test workflow for the new tap
 name: brew test-bot
 
 on:
