@@ -13,6 +13,12 @@ class Anyzig < Formula
     end
   end
 
+  bottle do
+    root_url "https://github.com/slop-bucket/homebrew-tap/releases/download/anyzig-2026.11.12"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:  "e5ced3964d50e1d86037cff4534131ee62f9ed41f7394ff0d9eacf6386cd1427"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "9868c31a56c1cf95270a98cbd1a1991a59cb129fc87beec8843d700d47da1b91"
+  end
+
   keg_only "it conflicts with zig and zls"
 
   depends_on "zig" => :build
