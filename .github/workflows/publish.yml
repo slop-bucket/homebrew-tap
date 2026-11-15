@@ -1,4 +1,3 @@
-# brew tap-new uses this file to generate a bottle publish workflow for the new tap
 name: brew pr-pull
 
 on:
