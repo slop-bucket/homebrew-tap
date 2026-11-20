@@ -11,9 +11,9 @@ class VscodeLanguageServers < Formula
   end
 
   bottle do
-    root_url "https://github.com/slop-bucket/homebrew-tap/releases/download/vscode-language-servers-1.146.0"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:  "0f6fa63556be1d33a79708cbb21e6b220f33235c50dde849bb6e3538526bd478"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "b1ebeb8c7cc9c5597d19f5010fbc7451867f265a6d9e719d33aac07f85a526d5"
+    root_url "https://github.com/slop-bucket/homebrew-tap/releases/download/vscode-language-servers-1.147.0"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:  "95557f9983e8f30d1fb1f2af15e7c6184cfbae7800106c3b8ae43fe2ca91e12d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "e5df8118414a85cff10fa4507ceac53ef962056cb67f24d9b07f922eeaa2d516"
   end
 
   depends_on "pnpm" => :build
